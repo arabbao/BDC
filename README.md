@@ -8,7 +8,9 @@
   - A201 BDCC数据分析方法
 - C 数据收集 Data Collection
   - C101 BDCC数据收集技术介绍
+    - 课程说明：介绍BDCC数据收集的范围，流程，方法和相关工具
   - C201 BDCC业务系统数据收集方法
+    - 课程说明：介绍BDCC如何对接MES等业务系统的数据库，以实例介绍接入业务数据的方法
 - D 元数据管理 Meta Data Management
   - D101 BDCC元数据管理介绍
   - D201 BDCC Kbase元数据管理应用
