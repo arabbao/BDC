@@ -4,15 +4,9 @@
 
 ## 概述
 
-有哪些方式，每种方式是什么样的一个形式，目前主要有哪几种。
-
 ## 应用
 
-### 数据库定时同步 -- Kettle
-
-原理介绍，然后举个示例，申明一下该方法局限性
-
-#### 实现原理
+### 数据库同步方式系统对接 -- Infra Monitor 任务管理
 
 #### 前置条件
 
@@ -20,31 +14,51 @@
 - 若需增量合并，需明确表的业务主键是什么？以此作为数据合并的依据。
 - 如果初始化同步的数据量较大，超过5kw，最好减少同步的数据量，增加必要的约束条件，避免不必要的 Oracle 读取超时问题。
 
-#### 示例
+#### 实践案例
 
-- 拷贝模板任务，修改 config.properties 文件（可选）
+对接 MES / WMS 系统数据库采用了 DB 数据同步方式，实现以表为粒度进行同步。
 
-> 如果当前启用的任务不能覆盖新增数据源（源端DB），则需要新建一个任务
+| 任务名称 | 任务类别 | 执行成功次数 | 执行失败次数 | 任务执行周期 | 说明 |
+| --- | --- | --- | --- | --- | --- |
+| mesdb2pg_data_sync | KETTLE | 1465 | 32 | 0 0 * * * * | 涉及 MESDB 中 82 张表，执行失败有两个原因，一个是前几天任务配置修改时手误引起配置错误，另一个是初期配置时的试错 |  
+| mesdb2pg_data_sync_30m | KETTLE | 3344 | 2 | 0 5 * * * * | 涉及 MESDB 中 2 张表(G_SN_STATUS/G_SN_TRAVEL)
+| wmsdb2pg_data_sync | KETTLE | 1470 | 33 | 0 0 * * * *	| 涉及 MES(WMS) 中 10 张表及视图，执行失败有两个原因，一个是前几天任务配置修改时手误引起配置错误，另一个是初期配置时的试错 
+
+参见: http://bdcc-infra-monitor.sz.chiconypower.com.cn/datajob
+
+#### 案例教学
+
+1. 拷贝模板任务，修改 config.properties 文件
 
 ```java
-SRC_TYPE=<CUSTOME_SRC_TYPE>
+// 任务唯一标识
+SRC_TYPE=<JOB_ID>
 
-SOURCE_DB_URL=jdbc:oracle:thin:@//<IP>:1521
+// 源端为 Oracle 时
+SOURCE_DB_URL=jdbc:oracle:thin:@//<HOST>:<PORT>
 SOURCE_DB_CLASSNAME=oracle.jdbc.driver.OracleDriver
 SOURCE_DB_USER=<USERNAME>
 SOURCE_DB_PASSWORD=<PASSWORD>
 
-TARGET_DB_URL=jdbc:postgresql://172.25.57.1:5493/chicony
+// 目标端为 PostgreSQL/Greenplum 时
+TARGET_DB_URL=jdbc:postgresql://<HOST>:<PORT>/<DATABASE>
 TARGET_DB_CLASSNAME=org.postgresql.Driver
-TARGET_DB_USER=bdcuser
-TARGET_DB_PASSWORD=bdcc+chicony
+TARGET_DB_USER=<USERNAME>
+TARGET_DB_PASSWORD=<PASSWORD>
 ```
 
-- 明确要同步哪些表，以及相应的同步规则
+2. 明确待同步的表，字段，以及表同步规则
 
-核心就是明确几个概念，同步方式是选择"全量同步"，"增量追加"，"增量合并"; 源端表有哪些字段需要同步; 源端表的增量指针可以用哪个字段标示。
+主要弄明白以下三个问题:
+
+- 源表同步方式:  要同步哪张表，哪些字段，是选择 `全量同步`/`增量追加`/`增量合并`
+- 增量同步字段:  如果同步方式选择`增量追加`/`增量合并`，需要确定一个自增的字段
+- 主键/业务主键: 如果同步方式选择了`增量合并`，就需要定义一个或多个字段来做数据更新
+
+3. 访问目标端数据库，编写并执行如下SQL
 
 ```sql
+-- 全量同步
 INSERT INTO manager.job_data_sync(
 	src_schema_name, src_table_name,
 	dst_schema_name, dst_table_name, 
@@ -72,6 +86,7 @@ INSERT INTO manager.job_data_sync(
 	'1=1'
 	);
 
+-- 增量追加
 INSERT INTO manager.job_data_sync(
 	src_schema_name, src_table_name,
 	dst_schema_name, dst_table_name, 
@@ -96,41 +111,36 @@ INSERT INTO manager.job_data_sync(
 	'{"UPDATE_TIME": "update_time"}', 
 	true,
 	'CHICONY-WMS', 'MES',
---	'${SRC_INCR_FIELD} > to_timestamp(''${INCR_POINT}'', ''yyyy-mm-dd hh24:mi:ss.ff3'')',
 	'${SRC_INCR_FIELD} > to_date(''${INCR_POINT}'', ''yyyy-mm-dd hh24:mi:ss'')'
 	);
 ```
 
-- Infra Monitor 新增定时任务(可选) 
-
-> 如果当前启用的任务不能覆盖新增数据源（源端DB），则需要新建一个任务
-
-- Infra Monitor 任务测试
+3. 新增定时任务
 
 ### 数据库实时同步 -- CDC
 
-因诸多限制，尚未在群电落地
-
 #### 前置条件
 
-- 表必须包含主键，
+- 表必须包含主键
 
-### 共享目录文件导入 -- DCAgent + SHELL
+#### 实践案例
 
-适用于外部系统对接，采用文件方式进行解耦。。。
+随着群电对数据及时性要求的不断提高，同时数据表也支持CDC，则会考虑验证该方案，目前暂不考虑。
 
-- 挂载 smb 目录到 linux 目录下
-- 部署 dcagent ，修改 logagent.ini 配置文件，监听相应的目录
-- 查看 log ，验证文件处理情况
+### 共享目录方式系统对接 -- DCAgent + SHELL
 
-### 产测文件自动上传 API -- Kafka
+适用于外部系统对接，当前对接 SAP / WF 系统数据文件采用了文件监听加导入的方式。
 
-DAP
+1. 挂载 smb 目录到 linux 目录下
+2. 部署 dcagent ，修改 logagent.ini 配置文件，监听相应的目录
+3. 查看 log ，验证文件处理情况
 
-### Web 文件手动上传 API -- DAVI
+参见: [DCAgent](http://bdcc-infra-grafana.sz.chiconypower.com.cn/d/000000002/dcagent)
 
-面向用户整理的数据
+### 消息队列方式系统对接 -- Kafka
 
-### 第三方开放接口 -- 接口
+对接 DAP 外部系统走了 Kafka 日志总线，承接比如 SPI 的日志上传。DAVI 网页端上传文件也依赖 Kafka
 
-微信或SAP
+### 第三方接口方式系统对接 -- 自定义开发
+
+对接 微信小程序的云端数据库 采用了该方式，另外 SAP 部分数据的导入也可能采用该方式
