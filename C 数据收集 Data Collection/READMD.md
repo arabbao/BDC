@@ -10,9 +10,9 @@
 
 #### 前置条件
 
-- 若需增量同步，需明确表中是否有一个字段可以作为数据更新的指针，比如 UDT，ID，当更新该表中某一字段的时候，UDT 都会同步修改
-- 若需增量合并，需明确表的业务主键是什么？以此作为数据合并的依据。
-- 如果初始化同步的数据量较大，超过5kw，最好减少同步的数据量，增加必要的约束条件，避免不必要的 Oracle 读取超时问题。
+- 暂不支持 blob 字段类型数据同步
+- 若需`增量同步`，表必须有一个自增字段，例如 UDT，当更新某一行记录的时候，该字段都会同步更新
+- 若需`增量合并`，表除了要包含自增字段，表中每条记录需要有一个唯一标识，可以是主键，唯一索引
 
 #### 实践案例
 
@@ -21,16 +21,16 @@
 1. 拷贝模板任务，修改 config.properties 文件
 
 ```java
-// 任务唯一标识
+// 源端数据库实例唯一标识
 SRC_TYPE=<JOB_ID>
 
-// 源端为 Oracle 时
+// JDBC配置 -- 源端为 Oracle
 SOURCE_DB_URL=jdbc:oracle:thin:@//<HOST>:<PORT>
 SOURCE_DB_CLASSNAME=oracle.jdbc.driver.OracleDriver
 SOURCE_DB_USER=<USERNAME>
 SOURCE_DB_PASSWORD=<PASSWORD>
 
-// 目标端为 PostgreSQL/Greenplum 时
+// JDBC配置 -- 目标端为 PostgreSQL/Greenplum
 TARGET_DB_URL=jdbc:postgresql://<HOST>:<PORT>/<DATABASE>
 TARGET_DB_CLASSNAME=org.postgresql.Driver
 TARGET_DB_USER=<USERNAME>
@@ -39,11 +39,12 @@ TARGET_DB_PASSWORD=<PASSWORD>
 
 2. 明确待同步的表，字段，以及表同步规则
 
-	主要弄明白以下三个问题:
+   主要弄明白以下四个问题:
 
-	- 源表同步方式:  要同步哪张表，哪些字段，是选择 `全量同步`/`增量追加`/`增量合并`
-	- 增量同步字段:  如果同步方式选择`增量追加`/`增量合并`，需要确定一个自增的字段
-	- 主键/业务主键: 如果同步方式选择了`增量合并`，就需要定义一个或多个字段来做数据更新
+   - 源表同步方式:  要同步哪张表，哪些字段，是选择`全量同步`/`增量追加`/`增量合并`中哪一类
+   - 增量同步字段:  如果同步方式选择`增量追加`/`增量合并`，就需确定哪个字段可以作为自增字段
+   - 主键/业务主键: 如果同步方式选择了`增量合并`，还需确定用哪几个字段来做表关联更新时的关联条件
+   - 源表读取约束:  如果初始同步的数据量较大，超过4kw，最好自定义源表查询条件，避免出现同步超时
 
 3. 访问目标端数据库，编写并执行如下SQL
 
@@ -111,7 +112,7 @@ INSERT INTO manager.job_data_sync(
 
 #### 前置条件
 
-- 表必须包含主键
+- 表必须有主键
 
 #### 实践案例
 
