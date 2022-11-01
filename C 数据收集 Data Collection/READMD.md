@@ -209,21 +209,18 @@ hostname = 172.25.57.1
 [NORMAL.SAP.SAP-CG-DATA]
 watch = /mnt/smb/SAP/SAP-CG-DATA
 patterns = WO_
-debounce = 3000
 command = /opt/bdcc/dcagent/plugins/psql-copy/copy-sap.sh
 polling_interval = 30
 ignores = Backup
 
 [NORMAL.SAP.Q-Hold]
 watch = /mnt/smb/SAP/Q-Hold
-debounce = 3000
 command = /opt/bdcc/dcagent/plugins/psql-copy/copy-sap-q-hold.sh
 polling_interval = 30
 ignores = Backup
 
 [NORMAL.WF]
 watch = /mnt/smb/WF_defect
-debounce = 3000
 command = /opt/bdcc/dcagent/plugins/psql-copy/copy-wf.sh
 polling_interval = 30
 ignores = (Backup|_invalid)
