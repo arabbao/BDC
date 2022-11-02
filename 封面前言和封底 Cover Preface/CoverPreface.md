@@ -25,5 +25,5 @@
 # 前言 Preface
 
 ## 课程在BDCC架构中的映射
-
+![](./resource/BDCC-traning-infra1.png)
 
