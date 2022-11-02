@@ -1,12 +1,13 @@
-
-<img src="BDC.png" title="NAME" height="20%" width="20%">
+<img src="./resource/BDC.png" title="NAME" height="20%" width="20%">
 
 
 # Big Data Cloud Center Training BDCC培训课程
 
-## 当前课程： I100 BDCC Infra 技术介绍
+## 当前课程： I100 BDCC Infra 技术介绍    ![](./resource/M-64.png)
 
-
+### 课程版本： V1.0
+### 讲师：闫硕
+### 课程分类：
 
 |课程分类|分类说明|本次课程名称|课程编码|讲师|
 --------|----|-------|--------|-----
@@ -19,5 +20,10 @@
 |M 数据建模 Data Modeling |BDCC 数据建模的相关课程 | | | |
 |P 数据应用 Data Application |BDCC 数据应用的相关课程 | | | |
 |V 数据可视化 Data Visualization |BDCC 数据可视化的相关课程 | | | |
+
+
+# 前言 Preface
+
+## 课程在BDCC架构中的映射
 
 
