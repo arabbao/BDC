@@ -23,7 +23,12 @@
 
 
 # 前言 Preface
-
+## 课程受众
+## 课程目标
 ## 课程在BDCC架构中的映射
 ![](./resource/BDCC-traning-infra1.png)
+
+# 课程内容
+# 课后问题
+# 讲师邮件地址
 
