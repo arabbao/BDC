@@ -21,9 +21,10 @@
   - G100 BDCC数据治理介绍
   - G200 BDCC数据治理方法论
 - I 平台基础设施 Platform Infra
-  - I100 BDCC Infra 技术介绍
-  - I101 BDCC Infra Docker 技术介绍
-  - I102 BDCC Infra Gateway 技术介绍
+  - I100 BDCC Infra 技术应用介绍
+  - I101 BDCC Infra Docker 技术应用介绍
+  - I102 BDCC Infra Gateway 技术应用介绍
+  - I103 BDCC Infra Kafka 技术应用介绍
   - I110 BDCC Infra Monitor监控介绍
   - I200 BDCC Infra 运维方法-指标监控
 - M 数据建模 Data Modeling
