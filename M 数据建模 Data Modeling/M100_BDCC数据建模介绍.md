@@ -1,4 +1,38 @@
-# BDCC数据建模介绍
+<img src="../封面前言和封底%20Cover%20Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
+
+
+# Big Data Cloud Center Training BDCC培训课程
+
+## 当前课程： M100 BDCC数据建模介绍    ![](../封面前言和封底%20Cover%20Preface/d-64.png)
+
+### 课程版本： V1.0
+### 讲师：陈蕴弘
+### 课程分类：M
+
+|课程分类|分类说明|本次课程名称|课程编码|讲师|
+--------|----|-------|--------|-----
+|I 平台基础设施监控 Platform Infra Monitor|BDCC 基础设施和监控的相关课程| | | |
+|A 数据分析 Data Analysis |BDCC 数据分析的相关课程 | | | |
+|C 数据收集 Data Collection |BDCC 数据收集的相关课程 | | | |
+|D 元数据管理 Meta Data Management |BDCC 元数据管理的相关课程 | | | |
+|E 数据整理 Data ETL |BDCC 数据整理ETL的相关课程 | | | |
+|G 数据治理 Data Governance |BDCC 数据治理的相关课程 | | | |
+|**M 数据建模 Data Modeling**|**BDCC 数据建模的相关课程**|**M100 BDCC数据建模介绍**|**M00**|**陈蕴弘** |
+|P 数据应用 Data Application |BDCC 数据应用的相关课程 | | | |
+|V 数据可视化 Data Visualization |BDCC 数据可视化的相关课程 | | | |
+
+
+# 前言 Preface
+  数据无处不在，对业务的管理都是基于数据的运用，而这都是以数据建模为基础的。本文将介绍数据建模的基本思想和原则，BDCC数据模型的设计理念与方法，以及BDCC平台的数据建模实践。
+## 课程受众
+  数据部门的管理者，数据平台的开发者、管理者
+  业务部门，特别是制作报表的人和看报表的人
+  也欢迎
+## 课程目标
+## 课程在BDCC架构中的映射
+![](./resource/BDCC-traning-infra1.png)
+
+# 课程内容# BDCC数据建模介绍
 
 
 
