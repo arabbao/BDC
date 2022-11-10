@@ -1,9 +1,9 @@
-<img src="../封面前言和封底%20Cover%20Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
+<img src="./M100_image/BDC.png" title="NAME" height="20%" width="20%">
 
 
 # Big Data Cloud Center Training BDCC培训课程
 
-## 当前课程： M100 BDCC数据建模介绍    ![](../封面前言和封底%20Cover%20Preface/d-64.png)
+## 当前课程： M100 BDCC数据建模介绍    ![](../封面前言和封底%20Cover%20Preface/resource/d-64.png)
 
 ### 课程版本： V1.0
 ### 讲师：陈蕴弘
@@ -31,8 +31,7 @@
 ## 课程目标
   本文将介绍数据建模的基本思想和原则，让读者建立起数据模型思维，并通过BDCC数据模型的设计实践来了解数据建模的实际运用。
 ## 课程在BDCC架构中的映射
-![](./resource/BDCC-traning-infra1.png)
-
+![](../封面前言和封底%20Cover%20Preface/resource/BDCC-traning-modeling1.png)
 # 课程内容
 
 * <font size=5>[1 数据建模综述](#1)</font>
