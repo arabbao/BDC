@@ -89,7 +89,7 @@ Docker 是容器化最常见的服务实现，我们使用单机及 Swarm 模式
 
 容器化对服务版本的管理，是服务容器镜像；在大型部署场景下，会建立独立的镜像源，比如使用 Harbor 服务。目前在群电，我们使用互联网代理源、或者通过 VPN 访问英业达内网源就够用。
 
-> 相关课程：【I101 BDCC Infra Docker 技术应用介绍】
+> 相关课程：《 I101 BDCC Infra Docker 技术应用介绍 》
 
 ## 数据服务 BDCC
 
@@ -125,7 +125,7 @@ Kafka 是 BDCC 方案中实时处理的中心组件。
 - Topic 消息查询，http://bdcc-kowl.sz.chiconypower.com.cn
 - Kafka Rest Proxy Producer，http://bdcc-kafka-proxy-producer.sz.chiconypower.com.cn
 
-> 相关课程：【I103 BDCC Infra Kafka 技术应用介绍】
+> 相关课程：《 I103 BDCC Infra Kafka 技术应用介绍 》
 
 ### 实时数据任务 Flink
 
@@ -171,7 +171,7 @@ Kong 网关是一款基于 OpenResty（Nginx+Lua 模块）编写的高可用、�
 
 ![](./images/i100-kong-monitor.jpg)
 
-> 相关课程：【I102 BDCC Infra Gateway 技术应用介绍】
+> 相关课程：《 I102 BDCC Infra Gateway 技术应用介绍 》
 
 ### 权限登录服务 DAuth
 
@@ -266,7 +266,7 @@ Prometheus 社区还提供了大量第三方实现的监控数据采集支持：
 
 监控类 Grafana 服务地址，http://bdcc-infra-grafana.sz.chiconypower.com.cn
 
-> 相关课程：【I200 BDCC Infra 运维方法-指标监控】
+> 相关课程：《 I200 BDCC Infra 运维方法-指标监控 》
 
 在 BDCC 方案里，由于对数据库接入、可视化有进一步需求；英业达也基于开源组件，进行了二次开发，便于满足大数据方面的需求，更好的实现低代码可视化看板开发。
 
@@ -301,7 +301,7 @@ BDCC Infra 主要使用 Elasticsearch 存储所有服务容器直接输出的日
 
 服务地址，http://bdcc-infra-monitor.sz.chiconypower.com.cn
 
-> 相关课程：【I110 BDCC Infra Monitor 监控介绍】
+> 相关课程：《 I110 BDCC Infra Monitor 监控介绍 》
 
 ## 开放能力与运维服务
 
@@ -311,15 +311,15 @@ BDCC 基础设施服务，主要是作为 BDCC 基础组件支持大数据应用
 
 BDCC 基础设施服务，基本都是高可用、分布式架构，有一定的理解、运维的成本。BDCC 方案的服务中，也包含了定期巡检、用量评估的工作，来保证 BDCC 方案可以可靠运行。
 
-随着群电 IT 工程师对这些组件的逐步熟悉，一些日常基础维护操作会逐渐移交给 IT，提高整体运维效率，维持 BDCC 大数据业务正常、高效运行。
+随着厂区 IT 工程师对这些组件的逐步熟悉，一些日常基础维护操作会逐渐移交给 IT，提高整体运维效率，维持 BDCC 大数据业务正常、高效运行。
 
 # 课后内容
 
 ### 课后问题
 
 1. 请简述，BDCC 基础服务的部署方式。
-2. 请简述，群电自有数据库的数据，经过那些服务，进入到 BDCC PostgreSQL 里的。
-3. 请简述，群电测试结果文件，经过那些服务，被解析、写入到 BDCC PostgreSQL 里的。
+2. 请简述，自有数据库的数据，经过那些服务，进入到 BDCC PostgreSQL 里的。
+3. 请简述，测试结果文件，经过那些服务，被解析、写入到 BDCC PostgreSQL 里的。
 
 ### 讲师联系方式
 
