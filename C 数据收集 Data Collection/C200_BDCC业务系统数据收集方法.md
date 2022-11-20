@@ -1,23 +1,26 @@
-<img src="../封面前言和封底%20Cover%20Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
+[TOC]
 
 # Big Data Cloud Center Training BDCC培训课程
+
+![](../I%20平台基础设施%20Platform%20Infra/images/BDC.jpg)
+
 ## 当前课程：C200 BDCC业务系统数据收集方法
-### 课程版本： V1.0
-### 讲师：张兴龙
 
-# 前言 Preface
+| 课程编号 | 分类         | 等级     | 版本 | 更新日期   |
+| :------- | :----------- | :------- | :--- | :--------- |
+| C200     | 数据收集 Data Collection | 入门级别 | 1.0  | 2022-11-15 |
 
-## 课程受众
+### 课程受众
 
 - 数据工程师
 - DBA
 
-## 课程目标
+### 课程目标
 
 - 了解数据库同步怎么新增一张表
 - 了解怎么导入一个文本文件
 
-## 课程在BDCC架构中的映射
+### 课程在BDCC架构中的映射
 
 ![](../封面前言和封底%20Cover%20Preface/resource/BDCC-traning-DC1.png)
 
@@ -323,15 +326,18 @@ sudo systemctl restart dcagent.service
 | remark | 备注信息 | |
 | inuse | 是否开启同步 | true |
 
-# 课后问题
+# 课后内容
+
+## 课后问题
 
 1. 数据库同步新增一张表时，需要明确什么？
 2. 若看板数据未更新，如何排查？
 3. CSV等文本文件的导入大家更倾向选择哪种方式？
 
-# 讲师邮件地址
+## 讲师联系方式
 
-Zhang.Xing-Long@inventec.com
+- 姓名：张兴龙
+- 邮箱: Zhang.Xing-Long@inventec.com
 
 
 
