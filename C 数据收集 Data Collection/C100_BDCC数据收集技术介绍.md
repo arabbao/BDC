@@ -1,4 +1,4 @@
-<img src="../封面前言和封底 Cover Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
+<img src="../封面前言和封底%20Cover%20Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
 
 # Big Data Cloud Center Training BDCC培训课程
 ## 当前课程：C100 BDCC数据收集技术介绍
@@ -22,7 +22,7 @@
 
 ## 课程在BDCC架构中的映射
 
-![](../封面前言和封底 Cover Preface/resource/BDCC-traning-DC1.png)
+![](../封面前言和封底%20Cover%20Preface/resource/BDCC-traning-DC1.png)
 
 # 课程内容
 
