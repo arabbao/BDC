@@ -1,4 +1,4 @@
-<img src="../封面前言和封底%20Cover%20Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
+<img src="../封面前言和封底 Cover Preface/resource/BDC.png" title="NAME" height="20%" width="20%">
 
 # Big Data Cloud Center Training BDCC培训课程
 ## 当前课程：C200 BDCC业务系统数据收集方法
@@ -19,7 +19,7 @@
 
 ## 课程在BDCC架构中的映射
 
-![](../封面前言和封底%20Cover%20Preface/resource/BDCC-traning-DC1.png)
+![](../封面前言和封底 Cover Preface/resource/BDCC-traning-DC1.png)
 
 # 课程内容
 
@@ -77,7 +77,7 @@ cd chicony-power-datajobs
 
 4. Infra Monitor中配置定时任务
 
-![](待完善截图)
+![](./images/job-create.png)
 
 5. 明确待同步的表，字段，以及表同步规则
 
@@ -177,7 +177,7 @@ INSERT INTO manager.job_data_sync(
 
 8. 查看数据同步是否正常执行
 
-![](待完善截图)
+![](./images/job-view-running.png)
 
 ### 数据库实时同步
 
