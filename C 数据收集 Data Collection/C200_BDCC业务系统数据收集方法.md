@@ -1,26 +1,32 @@
-# 数据同步
-
 [TOC]
 
-## 概述
+# Big Data Cloud Center Training BDCC培训课程
 
-数据采集作为 Inventec 大数据系统体系的第一环尤为重要。因此 BDC 团队 建立了一套标准的数据采集方案，致力规范、高性能地完成海量数据的采集，并将其传输到大数据平台。
+![](../I%20平台基础设施%20Platform%20Infra/images/BDC.jpg)
 
-我们将数据采集分为日志采集和数据库数据同步两部分。本章侧重讲解数据从业务系统同步进入数据仓库这个环节，但其适用性并不仅限于此。
+## 当前课程：C200 BDCC业务系统数据收集方法
 
-## 数据同步基础
+| 课程编号 | 分类         | 等级     | 版本 | 更新日期   |
+| :------- | :----------- | :------- | :--- | :--------- |
+| C200     | 数据收集 Data Collection | 入门级别 | 1.0  | 2022-11-15 |
 
-源业务系统的数据类型多种多样，有来自于关系型数据库的结构化数据，如 Oracle、SQL Server、 MySQL 等; 也有来源于非关系型数据库的非结构化数据，如 MongoDB 等了; 还有来源于文件系统的结构化或非结构化数据，如文件存储 NAS，Samba，对象存储 Minio，OSS 等，这类数据通常以文件形式存储。
+### 课程受众
 
-数据同步需要针对不同的数据类型及业务场景选择不同的同步方式。总的来说，同步方式可以分为三类: 数据库直连同步、数据库日志解析同步、数据文件同步。
+- 数据工程师
+- DBA
 
-### 数据库直连同步
+### 课程目标
 
-### 数据库日志解析同步
+- 了解数据库同步怎么新增一张表
+- 了解怎么导入一个文本文件
 
-### 数据文件同步
+### 课程在BDCC架构中的映射
 
-## Inventec数仓的同步方式
+![](../封面前言和封底%20Cover%20Preface/resource/BDCC-traning-DC1.png)
+
+# 课程内容
+
+## 数据收集方法
 
 ### 数据库直连同步
 
@@ -74,7 +80,7 @@ cd chicony-power-datajobs
 
 4. Infra Monitor中配置定时任务
 
-![](待完善截图)
+![](./images/job-create.png)
 
 5. 明确待同步的表，字段，以及表同步规则
 
@@ -174,7 +180,7 @@ INSERT INTO manager.job_data_sync(
 
 8. 查看数据同步是否正常执行
 
-![](待完善截图)
+![](./images/job-view-running.png)
 
 ### 数据库实时同步
 
@@ -188,12 +194,12 @@ INSERT INTO manager.job_data_sync(
 
 #### 前置条件
 
-- 共享目录需挂载到 Linux Server
+- 共享目录需预先挂载到 Server 的文件目录
 - 仅支持 **CSV风格** 文件导入，暂不支持 Excel 文件
 
 #### 具体操作
 
-1. 预先挂载 SMB 目录到 Linux Server 目录下
+1. 预先挂载共享目录到 Server 某个文件目录下，并确定待导入文件的文件路径
 
 ```bash
 sudo mkdir /mnt/smb
@@ -201,61 +207,61 @@ sudo mount -t cifs //172.25.58.50/mistest /mnt/smb -o uid=1000,username=bdcc,pas
 ls -ltr /mnt/smb
 ```
 
-2. 修改 logagent.ini 配置文件，**监听待导入文件所在目录**，以及**自定义数据导入命令**
+2. 本地先修改 logagent.ini 配置文件，配置**监听(watch)的文件目录**，以及自定义**新增文件之后的触发命令(command)**
 
 ```ini
 hostname = 172.25.57.1
 
-[NORMAL.SAP.SAP-CG-DATA]
-watch = /mnt/smb/SAP/SAP-CG-DATA
-patterns = WO_
-command = /opt/bdcc/dcagent/plugins/psql-copy/copy-sap.sh
-polling_interval = 30
-ignores = Backup
-
-[NORMAL.SAP.Q-Hold]
-watch = /mnt/smb/SAP/Q-Hold
-command = /opt/bdcc/dcagent/plugins/psql-copy/copy-sap-q-hold.sh
-polling_interval = 30
-ignores = Backup
-
-[NORMAL.WF]
-watch = /mnt/smb/WF_defect
-command = /opt/bdcc/dcagent/plugins/psql-copy/copy-wf.sh
+[NORMAL.SAP.STO-CPKC]
+watch = /mnt/smb/SAP/STO-CPKC
+command = /opt/bdcc/dcagent/plugins/psql-copy/copy-sap-fg-inventory.sh
 polling_interval = 30
 ignores = (Backup|_invalid)
+
+; ...
 ```
 
 ```bash
 #!/bin/bash
-set -e
+# set -e表示一旦脚本中有命令的返回值为非0，则脚本立即退出，后续命令不再执行; 所以此处需要注释掉下面一行
+# set -e
 cd `dirname $0`
 
 datfile=$1
+target_schema="sap"
+target_table="fg_inventory"
 
 if [ -z "$datfile" ]; then
-    echo "Usage: $0 WO_202210280800.txt"
+    echo "Usage: $0 YRCOA169120221024141608.txt"
     exit 1
 fi
 
 source .env
 
-psql -ac "\copy sap.rework_statistic(plant, wo, model, qty, date1, date2, wo_type, col1, line, release_date, reason, pic, reason_desc) from ${datfile}"
-# Rework 数据导入之后，触发整理程序
-# psql -ac "select dm.func_scc_rework_report();"
+psql -ac "drop table if exists sync.${target_table}; create table sync.${target_table} (like ${target_schema}.${target_table});"
+# NOTICE: 若文件中字段顺序和数据库表中字段顺序一致，则可以不用显示地申明字段，否则此处需要改写
+psql -ac "\copy sync.${target_table} from ${datfile}"
+
+if [ $? -ne 0 ]; then
+    mv $datfile ${datfile}_invalid
+    echo "Invalid File: ${datfile}" && exit 3
+fi
+
+# NOTICE: \copy 操作成功，才替换原表，如果直接 truncate 可能会造成原表数据被清空
+psql -ac "truncate table ${target_schema}.${target_table}; insert into ${target_schema}.${target_table} select * from sync.${target_table};"
 
 # 导入成功之后，将该文件挪至 Backup 目录
 mv $datfile $(dirname $datfile)/Backup/
 ```
 
-3. 推送 dc-agent 最新部署配置到 Linux Server 
+3. 推送 dc-agent 最新部署配置到 Server 
 
 ```bash
 cd chicony-power-datajobs
 ./deploy-dcagent.sh
 ```
 
-4. 登录 Linux Server，启动或重启 dc-agent 服务
+4. 登录 Server，启动或重启 dc-agent 服务
 
 ```bash
 cd /opt/bdcc/dcagent
@@ -286,7 +292,53 @@ sudo systemctl restart dcagent.service
 
 ## 数据同步遇到的问题与解决方案
 
-### 增量和全量同步的合并
+### 共享目录数据文件重复导入
 
-### 同步性能的处理
+首先确认一下是否是真的重复导入，排查一下源头生成
+
+### 共享目录数据文件没有导入
+
+首先看共享目录下的文件，是否维持原有写入路径，没有转移到 Backup 目录。
+
+## 附录:
+
+### 同步任务配置表
+
+| field_name | description | sample |
+| ------ | ------ | ------ |
+| job_id | 同步配置自增ID | 1 |
+| src_type | 源Server名称 | TAO |
+| src_db_name | 源数据库名称 | PCA |
+| src_schema_name | 源schema名称 | dbo |
+| src_table_name | 源表名 | PCA_SNO |
+| dst_schema_name | 目标schema名称 | fis |
+| dst_table_name | 目标表名称 | pca_pca_log |
+| src_select_statement | 同步字段（逗号隔开，别名方式可做源字段到目标字段的映射） | SnoId,McbSno,WkNo,Model,SWC,PdLine,WC,Rev,PCB,IsPass,NWC,Status,PenNo,Cdt,Udt,MIS_ID |
+| src_where_statement | 同步默认条件（默认值为1=1） | 1=1 |
+| sync_mode | 同步方式（merge/append/full） | merge |
+| src_incr_field | 源表用于增量的指针栏位名称(全量同步时须填写为'1') | Udt |
+| dst_pk | 目标表更新依据栏位（merge时生效） | snoid |
+| dst_distributed_by | 目标表分布键（选填，仅作记录） | mcbsno |
+| fields_mapping | 增量同步指针栏位源字段与目标字段映射 | {"Udt": "udt"} |
+| incr_point | 增量指针值（字符形式，可支持数字增量。全量同步时需填写为'-1'）| 2022-06-20 09:00:07.99 |
+| cdt | 创建时间 | 2022-06-20 09:33:44.921628 |
+| udt | 更新时间（上次成功同步时间）| 2022-06-21 09:33:44.921628 |
+| remark | 备注信息 | |
+| inuse | 是否开启同步 | true |
+
+# 课后内容
+
+## 课后问题
+
+1. 数据库同步新增一张表时，需要明确什么？
+2. 若看板数据未更新，如何排查？
+3. CSV等文本文件的导入大家更倾向选择哪种方式？
+
+## 讲师联系方式
+
+- 姓名：张兴龙
+- 邮箱: Zhang.Xing-Long@inventec.com
+
+
+
 

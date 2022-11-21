@@ -25,7 +25,7 @@
 
 <h2 id="2">2. 模型层级结构</h2>
 
-# <img src="img_3.png" width="60%">
+# <img src="img_3.png" width="40%">
 
 ### ODS(Operational Data Store) 原始数据层
 
@@ -77,7 +77,7 @@ DW是数据仓库的核心，从ODS层中获得的数据按照主题建立公用
 
 * 将概念数据类映射至DB数据结构。对于概念数据模型中确定的数据概念和复杂数据关系，给予更详细地描述,构建ER关系图
 
-# <img src="img_4.png" width="100%">
+# <img src="img_4.png" width="70%">
 
 ### 3. 物理模型定义
 
@@ -86,7 +86,7 @@ DW是数据仓库的核心，从ODS层中获得的数据按照主题建立公用
 
 # <img src="img_5.jpg" width="100%">
 
-# <img src="img_6.png" width="80%">
+# <img src="img_6.png" width="35%">
 
 
 
