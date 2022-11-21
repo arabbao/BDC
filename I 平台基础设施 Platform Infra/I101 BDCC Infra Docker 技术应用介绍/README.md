@@ -3,7 +3,7 @@
 
 # Big Data Cloud Center Training BDCC培训课程
 
-## 当前课程： I101 BDCC Infra Docker技术应用介绍    ![](./images/d-64.png)
+## 当前课程： I101 BDCC Infra Docker技术应用介绍  
 
 ### 讲师：梁巍
 ### 课程分类：
