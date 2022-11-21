@@ -43,6 +43,7 @@
 
 **课程覆盖示意**
 
+![](./封面前言和封底%20Cover%20Preface/resource/trainingmap.jpg)
 
 **BDCC 每个课程分类下按照三位数划分具体课程，百位为等级，后两位为具体课程编号**
 
