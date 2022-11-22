@@ -1,3 +1,5 @@
+[TOC]
+
 # Grafana主要控件配置详解
 
 ## Grafana简介
@@ -48,8 +50,6 @@ Grafana以控件的方式提供了各种主流的数据库、云端数据库，�
 
 > Viewer用户只有权限观看页面。
 
-
-
 通过对ini的配置，可以指定Grafana的某个org允许匿名访问。匿名访问和Viewer用户还是有一些不同的，匿名访问者必须通过确定的URL地址才能正确访问到页面；而Viewer用户可以通过浏览各个目录，根据页面的名字找到他需要访问的页面。
 
 Grafana也提供了基于用户组的权限管理模式。在Teams Tab可以设置群组，这样可以便于给一组用户赋同样的权限。
@@ -64,11 +64,7 @@ Grafana的配置页面虽然有plugin Tab，但是这个页面并不提供控件
 
 > [这是一个典型的Grafana官方控件的文档地址，基本没什么帮助](https://grafana.com/docs/grafana/latest/visualizations/bar-gauge-panel/)
 
-
-
 所以我们在后面提供了部分控件的简单介绍，但绝大多数控件还是需要自己摸索一下才能熟悉。
-
-
 
 ### 4. 其它配置
 
@@ -78,15 +74,11 @@ Grafana提供的主题只有Dark 和 Light两种，一般默认是Dark，即黑�
 
 对于单个页面，也可以在URL里通过加上 *&theme=Light* 来强制它显示白底色主题。
 
-
-
 Grafana有Folder的概念，可以把不同页面放在不同的Folder下；可以针对Folder来对用户或用户组设置权限。
 
 当把一个页面从某个Folder移到另一个Folder去时，页面的URL并不会变化。
 
 所以建议在某个权限比较严格的Folder下面搭建新页面，完成后再移到其他Folder里。
-
-
 
 ## 使用Grafana开发页面
 
